@@ -11,19 +11,27 @@ namespace RPGM.Gameplay
     /// </summary>
     public class CameraController : MonoBehaviour
     {
-        public Transform focus;
-        public float smoothTime = 2;
+        public Transform target;
+        public float smoothing;
+        public Vector2 maxPosition;
+        public Vector2 minPosition;
 
-        Vector3 offset;
-
-        void Awake()
+        void Start()
         {
-            offset = focus.position - transform.position;
+            
         }
 
-        void Update()
+        void LateUpdate()
         {
-            transform.position = Vector3.Lerp(transform.position, focus.position - offset, Time.deltaTime * smoothTime);
+            if(transform.position != target.position)
+            {
+                Vector3 targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
+
+                targetPosition.x = Mathf.Clamp(targetPosition.x, minPosition.x, maxPosition.x);
+                targetPosition.y = Mathf.Clamp(targetPosition.y, minPosition.y, maxPosition.y);
+
+                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing);
+            }
         }
     }
 }
