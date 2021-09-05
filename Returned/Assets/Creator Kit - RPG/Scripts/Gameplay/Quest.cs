@@ -152,8 +152,6 @@ namespace RPGM.Gameplay
                 clone.SetActive(true);
             }
             isFinished = true;
-            Destroy(transform.parent.gameObject, 0.1f);
-            Destroy(GameObject.Find("Aufgabe1"));
         }
 
     }
